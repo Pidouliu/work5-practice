@@ -52,7 +52,54 @@ const render = ( ) => {
   });
 };
 const removeContact = ( id ) => { const c = contacts. find ( x => x. id === id); if (! confirm ( `确定删除联系人「 ${c.name} 」吗？` )) return ;
-  contacts = contacts. filter ( x => x. id !== id); // 先改数组 
+  contacts = contacts. filter ( x => x. id !== id); 
   save (); 
-  render (); // 再渲染 
+  render ();  
   };
+  const startEdit = ( id ) => { const c = contacts. find ( x => x. id === id);
+  editingId = id;
+  nameInput. value = c. name ;
+  phoneInput. value = c. phone ;
+  groupSelect. value = c. group ;
+  noteInput. value = c. note ;
+  submitBtn. textContent = '保存修改' ;
+  cancelBtn. hidden = false ;
+  tip. textContent = '' ; window . scrollTo ({ top : 0 , behavior : 'smooth' });
+}; 
+const resetForm = ( ) => {
+  form. reset ();
+  editingId = null ;
+  submitBtn. textContent = '添加联系人' ;
+  cancelBtn. hidden = true ;
+  tip. textContent = '' ;
+};
+form. addEventListener ( 'submit' , ( e ) => {
+  e. preventDefault (); const name = nameInput. value . trim (); const phone = phoneInput. value . trim (); const group = groupSelect. value ; const note = noteInput. value . trim (); // 校验1：姓名必填 if (!name) {
+    tip. textContent = '姓名不能为空' ; return ;
+  } 
+   if(! /^1\d{10}$/ . test (phone)) {
+    tip. textContent = '手机号格式不正确：请输入 1 开头的 11 位数字'; 
+    return;
+  }  
+  const duplicated = contacts. some ( c => c. id !== editingId && c. phone === phone); if (duplicated) {
+    tip. textContent = `该手机号已存在（ ${contacts.find(c => c.phone === phone).name} ），不能重复添加` ; return ;
+  }
+
+  tip. textContent = '' ; if (editingId) {
+    const c = contacts. find ( x => x. id === editingId);
+    c. name = name;
+    c. phone = phone;
+    c. group = group;
+    c. note = note;
+  } else {
+    contacts.push ({ id : Date . now (). toString (), name, phone, group, note });
+  } save (); render (); resetForm ();
+});
+
+cancelBtn. addEventListener ( 'click' , resetForm); 
+keywordInput. addEventListener ( 'input' , ( e ) => {
+  keyword = e. target . value ; render ();
+});
+filterGroupSelect. addEventListener ( 'change' , ( e ) => {
+  filterGroup = e. target . value ; render ();
+}); 
