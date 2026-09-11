@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html lang = "zh-CN"> 
+<head>
+    <meta charset = "UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的联系人</title>
+    <style>
+        * { box-sizing : border-box; }
+        body { font-family : "Microsoft YaHei" , sans-serif; max-width : 720px ; margin : 24px auto; padding : 0 16px ; color : #333 ; }
+        form { background : #f5f7fa ; border : 1px solid #dee2e6 ; border-radius : 8px ; padding : 16px ; margin-bottom : 12px ; }
+        .form-row { margin-bottom : 10px ; display : flex; flex-wrap : wrap; gap : 8px ; align-items : center; }
+        label { min-width : 84px ; }
+        input, select, button { font-size : 15px ; padding : 6px 10px ; border : 1px solid #ccc ; border-radius : 4px ; }
+        button{ background : #0d6efd ; color : #fff ; border : none; cursor : pointer; padding : 8px 20px ; }
+        button.gray { background : #6c757d ; }
+        button.small { padding : 3px 10px ; font-size : 13px ; }
+        button.danger { background : #dc3545 ; }
+        .tip { color : #dc3545 ; font-size : 14px ; min-height : 20px ; margin : 4px 0 12px ; }
+        .toolbar { display : flex; gap : 8px ; margin-bottom : 12px ; flex-wrap : wrap; }
+        .toolbar input { flex : 1 ; min-width : 180px ; }
+        table { width : 100% ; border-collapse : collapse; background : #fff ; }
+        th , td { border : 1px solid #dee2e6 ; padding : 8px ; text-align : center; font-size : 14px ; }
+        th { background : #e9ecef ; }
+        .empty { color : #888 ; }
+    </style>
+</head>
+<body>
+    <h1>我的联系人</h1>
+    <form id="contact-form">
+        <div class="form-row">
+            <label for="name">姓名 *</label>
+            <input type="text" id="name" placeholder="张三">
+        </div>
+        <div class="form-row">
+            <label for="group">分组 *</label>
+            <select id="group">
+                <option>家人</option><option>朋友</option><option>同事</option><option>其他</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="note">备注</label>
+            <input type="text" id="note" placeholder="生日12月">
+        </div>
+        <button type="submit" id="submit-btn">添加联系人</button>
+        <button type="button" id="cancel-btn" class="gray" hidden>取消编辑</button>
+    </form>
+
+    <p class="tip" id="tip"></p>
+    
+</body>
